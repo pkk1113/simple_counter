@@ -13,10 +13,20 @@ class AppPage extends GetView<AppController> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            FloatingActionButton(
-              child: Icon(Icons.save),
-              tooltip: '현재 상태 저장',
-              onPressed: controller.addCounter,
+            Row(
+              children: [
+                FloatingActionButton(
+                  child: Icon(Icons.save),
+                  tooltip: '현재 상태 저장',
+                  onPressed: controller.save,
+                ),
+                SizedBox(width: 5.0),
+                FloatingActionButton(
+                  child: Icon(Icons.replay_outlined),
+                  tooltip: '저장 불로오기',
+                  onPressed: controller.load,
+                ),
+              ],
             ),
             FloatingActionButton(
               child: Icon(Icons.add),
