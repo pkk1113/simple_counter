@@ -8,8 +8,16 @@ import 'package:simple_counter/models/counter_data.dart';
 
 class Item {
   final Key key;
+  CounterController counterController;
 
-  Item({this.key});
+  Item({
+    @required this.key,
+    String title = '',
+    int count = 0,
+  }) : counterController = Get.put(
+          CounterController(title: title, count: count),
+          tag: CounterController.createTag(key),
+        );
 }
 
 class AppController extends GetxController {
@@ -44,10 +52,16 @@ class AppController extends GetxController {
           clear();
 
           counterData.counterList.forEach((element) {
-            itemList.add(Item(key: Key('${itemIndex++}')));
+            itemList.add(Item(
+              key: Key('${itemIndex++}'),
+              title: element.title,
+              count: element.count,
+            ));
           });
+
+          Get.snackbar('불러오기', '불러왔습니다.');
         })
-        .catchError((e) {})
+        .catchError((e) => Get.snackbar('불러오기', '불러오기 중 문제가 발생하였습니다.'))
         .whenComplete(() => inProgress.value = false);
   }
 
@@ -71,7 +85,7 @@ class AppController extends GetxController {
         .then((sharedPreferences) =>
             sharedPreferences.setString('counter_data', jsonEncodedCounterData))
         .then((value) => Get.snackbar('저장', value ? '저장하였습니다.' : '저장에 실패하였습니다.'))
-        .catchError((e) {})
+        .catchError((e) => Get.snackbar('저장', '저장 중 문제가 발생하였습니다.'))
         .whenComplete(() => inProgress.value = false);
   }
 }
