@@ -18,16 +18,15 @@ class CounterWidget extends StatelessWidget {
   );
 
   /// 필드
-  final Key key;
+  final CounterController controller;
 
   /// 생성자
   CounterWidget({
-    @required this.key,
+    @required this.controller,
   });
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(CounterController(), tag: CounterController.createTag(key));
     return Material(
       color: Colors.pink[100],
       borderRadius: BorderRadius.circular(5.0),
