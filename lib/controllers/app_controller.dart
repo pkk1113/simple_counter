@@ -68,25 +68,32 @@ class AppController extends GetxController {
   void save() async {
     inProgress.value = true;
 
-    final List<Counter> counterList = [];
+    try {
+      final List<Counter> counterList = [];
 
-    itemList.forEach((element) {
-      final controller = Get.find<CounterController>(tag: CounterController.createTag(element.key));
-      counterList.add(Counter(
-        title: controller.titleTextEditingController.text,
-        count: controller.count.value,
-      ));
-    });
+      itemList.forEach((element) {
+        final controller =
+            Get.find<CounterController>(tag: CounterController.createTag(element.key));
+        counterList.add(Counter(
+          title: controller.titleTextEditingController.text,
+          count: controller.count.value,
+        ));
+      });
 
-    final counterData = CounterData(counterList: counterList);
-    final jsonEncodedCounterData = jsonEncode(counterData.toJson());
+      final counterData = CounterData(counterList: counterList);
+      final jsonEncodedCounterData = jsonEncode(counterData.toJson());
 
-    SharedPreferences.getInstance()
-        .then((sharedPreferences) =>
-            sharedPreferences.setString('counter_data', jsonEncodedCounterData))
-        .then((value) => Get.snackbar('저장', value ? '저장하였습니다.' : '저장에 실패하였습니다.'))
-        .catchError((e) => Get.snackbar('저장', '저장 중 문제가 발생하였습니다.'))
-        .whenComplete(() => inProgress.value = false);
+      final sharedPreferences = await SharedPreferences.getInstance();
+      final result = await sharedPreferences.setString('counter_data', jsonEncodedCounterData);
+
+      if (result) throw null;
+
+      Get.snackbar('저장 성공', '저장하였습니다.');
+    } catch (_) {
+      Get.snackbar('저장 실패', '저장 중 문제가 발생하였습니다.');
+    } finally {
+      inProgress.value = false;
+    }
   }
 
   @override
