@@ -28,7 +28,7 @@ class CounterWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.pink[100],
+      color: Colors.blueAccent,
       borderRadius: BorderRadius.circular(5.0),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
@@ -40,7 +40,7 @@ class CounterWidget extends StatelessWidget {
                     textAlign: TextAlign.left,
                     style: _textStyle,
                     keyboardType: TextInputType.text,
-                    decoration: _textfieldInputDectoration.copyWith(hintText: 'Title'),
+                    decoration: _textfieldInputDectoration.copyWith(hintText: '제목'),
                     inputFormatters: [_TitleInputFormatter()])),
             SizedBox(width: 10.0),
             Padding(
@@ -48,14 +48,10 @@ class CounterWidget extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Material(
-                    color: Colors.pink,
-                    shape: CircleBorder(side: BorderSide(width: 1.0, color: Colors.black45)),
-                    child: InkWell(
-                      child: Icon(Icons.remove, size: _buttonSize),
-                      customBorder: CircleBorder(),
-                      onTap: controller.minus,
-                    ),
+                  InkWell(
+                    child: Icon(Icons.remove, size: _buttonSize),
+                    customBorder: CircleBorder(),
+                    onTap: controller.minus,
                   ),
                   Container(
                     margin: EdgeInsets.symmetric(horizontal: 5.0),
@@ -66,14 +62,10 @@ class CounterWidget extends StatelessWidget {
                           textAlign: TextAlign.center,
                         )),
                   ),
-                  Material(
-                    color: Colors.lightBlue,
-                    shape: CircleBorder(side: BorderSide(width: 1.0, color: Colors.black45)),
-                    child: InkWell(
-                      child: Icon(Icons.add, size: _buttonSize),
-                      customBorder: CircleBorder(),
-                      onTap: controller.plus,
-                    ),
+                  InkWell(
+                    child: Icon(Icons.add, size: _buttonSize),
+                    customBorder: CircleBorder(),
+                    onTap: controller.plus,
                   ),
                 ],
               ),
@@ -92,27 +84,5 @@ class _TitleInputFormatter extends TextInputFormatter {
       return oldValue;
     }
     return newValue;
-  }
-}
-
-class _CountInputFormatter extends TextInputFormatter {
-  @override
-  TextEditingValue formatEditUpdate(TextEditingValue oldValue, TextEditingValue newValue) {
-    String result;
-    if (newValue.text.length > 3) {
-      result = oldValue.text;
-    } else if (newValue.text.isEmpty) {
-      result = '0';
-    } else if (newValue.text.numericOnly().isEmpty) {
-      result = oldValue.text;
-    } else if (oldValue.text.numericOnly() == '0') {
-      result = newValue.text.numericOnly().substring(1);
-    } else {
-      result = newValue.text.numericOnly();
-    }
-    return TextEditingValue(
-      text: result,
-      selection: TextSelection.fromPosition(TextPosition(offset: result.length)),
-    );
   }
 }

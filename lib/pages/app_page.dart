@@ -40,20 +40,24 @@ class AppPage extends GetView<AppController> {
         title: Text('카운터'),
         centerTitle: true,
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-        child: Obx(() => ListView.builder(
-              itemCount: controller.itemList.length,
-              itemBuilder: (_, index) => Dismissible(
-                  key: controller.itemList[index].key,
-                  onDismissed: (direction) {
-                    controller.removeAt(index);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 7.0),
-                    child: CounterWidget(controller: controller.itemList[index].counterController),
-                  )),
-            )),
+      body: GestureDetector(
+        onTap: Get.focusScope.unfocus,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+          child: Obx(() => ListView.builder(
+                itemCount: controller.itemList.length,
+                itemBuilder: (_, index) => Dismissible(
+                    key: controller.itemList[index].key,
+                    onDismissed: (direction) {
+                      controller.removeAt(index);
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 7.0),
+                      child:
+                          CounterWidget(controller: controller.itemList[index].counterController),
+                    )),
+              )),
+        ),
       ),
     );
   }

@@ -88,4 +88,10 @@ class AppController extends GetxController {
         .catchError((e) => Get.snackbar('저장', '저장 중 문제가 발생하였습니다.'))
         .whenComplete(() => inProgress.value = false);
   }
+
+  @override
+  void onClose() {
+    clear();
+    super.onClose();
+  }
 }
