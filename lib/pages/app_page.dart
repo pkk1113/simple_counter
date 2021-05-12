@@ -39,9 +39,26 @@ class AppPage extends GetView<AppController> {
                             ),
                             FloatingActionButton(
                               backgroundColor: Colors.black54,
-                              child: Icon(Icons.add),
-                              tooltip: 'Add Counter',
-                              onPressed: controller.addCounter,
+                              child: Icon(Icons.settings),
+                              tooltip: 'Settings',
+                              onPressed: () => Get.toNamed('/settings'),
+                            ),
+                            Row(
+                              children: [
+                                FloatingActionButton(
+                                  backgroundColor: Colors.black54,
+                                  child: Icon(Icons.delete_outline_rounded),
+                                  tooltip: 'Delete All',
+                                  onPressed: controller.clear,
+                                ),
+                                SizedBox(width: 5.0),
+                                FloatingActionButton(
+                                  backgroundColor: Colors.black54,
+                                  child: Icon(Icons.add),
+                                  tooltip: 'Add Counter',
+                                  onPressed: controller.addCounter,
+                                ),
+                              ],
                             ),
                           ],
                         ),
@@ -72,27 +89,36 @@ class AppPage extends GetView<AppController> {
                         onTap: () => Get.focusScope.unfocus(),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-                          child: Obx(() => ReorderableListView.builder(
-                                physics: BouncingScrollPhysics(),
-                                onReorder: (oldIndex, newIndex) =>
-                                    controller.swap(oldIndex, newIndex),
-                                itemCount: controller.itemList.length,
-                                itemBuilder: (_, index) => Dismissible(
-                                    key: controller.itemList[index].key,
-                                    onDismissed: (direction) {
-                                      controller.removeAt(index);
-                                    },
-                                    child: CounterWidget(
-                                      controller: controller.itemList[index].counterController,
-                                      index: index,
-                                    )),
+                          child: Obx(() => Column(
+                                children: [
+                                  Expanded(
+                                    child: ReorderableListView.builder(
+                                      physics: BouncingScrollPhysics(),
+                                      onReorder: (oldIndex, newIndex) =>
+                                          controller.swap(oldIndex, newIndex),
+                                      itemCount: controller.itemList.length,
+                                      itemBuilder: (_, index) => Dismissible(
+                                          key: controller.itemList[index].key,
+                                          onDismissed: (direction) {
+                                            controller.removeAt(index);
+                                          },
+                                          child: CounterWidget(
+                                            controller:
+                                                controller.itemList[index].counterController,
+                                            index: index,
+                                          )),
+                                    ),
+                                  ),
+                                  SizedBox(height: 65)
+                                ],
                               )),
                         ),
                       ),
                     )),
               ),
             )),
-        controller.inProgress.value ? Center(child: CircularProgressIndicator()) : SizedBox(),
+        Obx(() =>
+            controller.inProgress.value ? Center(child: CircularProgressIndicator()) : SizedBox()),
       ],
     );
   }

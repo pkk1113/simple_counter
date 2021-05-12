@@ -11,7 +11,7 @@ class CounterWidget extends StatelessWidget {
     fontSize: _fontSize,
     height: 30.0 / _fontSize,
   );
-  static const _borderColor = Colors.black54;
+  static const _borderColor = Colors.transparent;
   static const InputDecoration _textfieldInputDectoration = InputDecoration(
     enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: _borderColor)),
     disabledBorder: OutlineInputBorder(borderSide: BorderSide(color: _borderColor)),
@@ -84,16 +84,16 @@ class CounterWidget extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(width: 10.0),
+              SizedBox(width: 30.0),
               ReorderableDragStartListener(
                 index: index,
                 child: Container(
-                  padding: EdgeInsets.all(2.0),
+                  padding: EdgeInsets.all(5.0),
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5.0),
-                    border: Border.all(width: 1, color: _borderColor),
+                    borderRadius: BorderRadius.circular(8.0),
+                    border: Border.all(width: 1, color: Colors.black38),
                   ),
-                  child: Icon(Icons.menu, color: _borderColor),
+                  child: Icon(Icons.menu, color: Colors.black54),
                 ),
               ),
             ],

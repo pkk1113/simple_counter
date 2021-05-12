@@ -52,26 +52,35 @@ class AppController extends GetxController {
 
   void load() async {
     inProgress.value = true;
+    bool progressResult = false;
+    final now = DateTime.now();
 
-    SharedPreferences.getInstance()
-        .then((sharedPreferences) => sharedPreferences.getString('counter_data'))
-        .then((jsonEncodedCounterData) {
-          CounterData counterData = CounterData.fromJson(jsonDecode(jsonEncodedCounterData));
+    try {
+      final sharedPreferences = await SharedPreferences.getInstance();
+      final jsonEncodedCounterData = sharedPreferences.getString('counter_data');
+      final counterData = CounterData.fromJson(jsonDecode(jsonEncodedCounterData));
 
-          clear();
+      clear();
 
-          counterData.counterList.forEach((element) {
-            itemList.add(Item(
-              key: Key('${_itemIndex++}'),
-              title: element.title,
-              count: element.count,
-            ));
-          });
+      counterData.counterList.forEach((element) {
+        itemList.add(Item(
+          key: Key('${_itemIndex++}'),
+          title: element.title,
+          count: element.count,
+        ));
+      });
 
-          Get.snackbar('불러오기', '불러왔습니다.');
-        })
-        .catchError((e) => Get.snackbar('불러오기', '불러오기 중 문제가 발생하였습니다.'))
-        .whenComplete(() => inProgress.value = false);
+      progressResult = true;
+    } catch (_) {
+      progressResult = false;
+    } finally {
+      int progressedMillisecond = DateTime.now().difference(now).inMilliseconds;
+      if (progressedMillisecond < 500) {
+        await Future.delayed(Duration(milliseconds: 500 - progressedMillisecond));
+      }
+      inProgress.value = false;
+      progressResult ? Get.snackbar('Load', 'SUCCESSED!') : Get.snackbar('Load', 'FAILED!');
+    }
   }
 
   void save() async {
@@ -104,12 +113,10 @@ class AppController extends GetxController {
     } finally {
       int progressedMillisecond = DateTime.now().difference(now).inMilliseconds;
       if (progressedMillisecond < 500) {
-        await Future.delayed(Duration(milliseconds: 2000 - progressedMillisecond));
+        await Future.delayed(Duration(milliseconds: 500 - progressedMillisecond));
       }
       inProgress.value = false;
-      progressResult
-          ? Get.snackbar('저장 성공', '저장하였습니다.')
-          : Get.snackbar('저장 실패', '저장 중 문제가 발생하였습니다.');
+      progressResult ? Get.snackbar('Save', 'SUCCESSED!') : Get.snackbar('Save', 'FAILED!');
     }
   }
 
