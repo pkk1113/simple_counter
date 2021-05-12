@@ -86,7 +86,7 @@ class AppController extends GetxController {
       final sharedPreferences = await SharedPreferences.getInstance();
       final result = await sharedPreferences.setString('counter_data', jsonEncodedCounterData);
 
-      if (result) throw null;
+      if (!result) throw null;
 
       Get.snackbar('저장 성공', '저장하였습니다.');
     } catch (_) {
