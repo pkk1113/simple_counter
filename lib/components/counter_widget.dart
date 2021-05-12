@@ -32,67 +32,72 @@ class CounterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      borderRadius: BorderRadius.circular(5.0),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
-        child: Row(
-          children: [
-            Expanded(
-                child: TextField(
-                    controller: controller.titleTextEditingController,
-                    textAlign: TextAlign.left,
-                    style: _textStyle,
-                    keyboardType: TextInputType.text,
-                    decoration: _textfieldInputDectoration.copyWith(hintText: 'Title'),
-                    textInputAction: TextInputAction.next,
-                    focusNode: controller.focusNode,
-                    onEditingComplete: controller.toNextFocus,
-                    inputFormatters: [_TitleInputFormatter()])),
-            SizedBox(width: 10.0),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 5.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                    canRequestFocus: false,
-                    child: Icon(Icons.remove, size: _buttonSize),
-                    customBorder: CircleBorder(),
-                    onTap: controller.minus,
-                  ),
-                  Container(
-                    margin: EdgeInsets.symmetric(horizontal: 5.0),
-                    width: 70.0,
-                    child: Obx(() => Text(
-                          '${controller.count.value}',
-                          style: _textStyle,
-                          textAlign: TextAlign.center,
-                        )),
-                  ),
-                  InkWell(
-                    canRequestFocus: false,
-                    child: Icon(Icons.add, size: _buttonSize),
-                    customBorder: CircleBorder(),
-                    onTap: controller.plus,
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(width: 10.0),
-            ReorderableDragStartListener(
-              index: index,
-              child: Container(
-                padding: EdgeInsets.all(2.0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5.0),
-                  border: Border.all(width: 1, color: _borderColor),
+    return Container(
+      padding: EdgeInsets.symmetric(vertical: 6.0),
+      decoration:
+          BoxDecoration(border: Border(bottom: BorderSide(width: 1.0, color: Colors.black54))),
+      child: Material(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(5.0),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
+          child: Row(
+            children: [
+              Expanded(
+                  child: TextField(
+                      controller: controller.titleTextEditingController,
+                      textAlign: TextAlign.left,
+                      style: _textStyle,
+                      keyboardType: TextInputType.text,
+                      decoration: _textfieldInputDectoration.copyWith(hintText: 'Title'),
+                      textInputAction: TextInputAction.next,
+                      focusNode: controller.focusNode,
+                      onEditingComplete: controller.toNextFocus,
+                      inputFormatters: [_TitleInputFormatter()])),
+              SizedBox(width: 10.0),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 5.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    InkWell(
+                      canRequestFocus: false,
+                      child: Icon(Icons.remove, size: _buttonSize),
+                      customBorder: CircleBorder(),
+                      onTap: controller.minus,
+                    ),
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 5.0),
+                      width: 70.0,
+                      child: Obx(() => Text(
+                            '${controller.count.value}',
+                            style: _textStyle,
+                            textAlign: TextAlign.center,
+                          )),
+                    ),
+                    InkWell(
+                      canRequestFocus: false,
+                      child: Icon(Icons.add, size: _buttonSize),
+                      customBorder: CircleBorder(),
+                      onTap: controller.plus,
+                    ),
+                  ],
                 ),
-                child: Icon(Icons.menu, color: _borderColor),
               ),
-            ),
-          ],
+              SizedBox(width: 10.0),
+              ReorderableDragStartListener(
+                index: index,
+                child: Container(
+                  padding: EdgeInsets.all(2.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5.0),
+                    border: Border.all(width: 1, color: _borderColor),
+                  ),
+                  child: Icon(Icons.menu, color: _borderColor),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
