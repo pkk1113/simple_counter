@@ -52,6 +52,7 @@ class AppPage extends GetView<AppController> {
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
                           child: Obx(() => ReorderableListView.builder(
+                                physics: BouncingScrollPhysics(),
                                 onReorder: (oldIndex, newIndex) =>
                                     controller.swap(oldIndex, newIndex),
                                 itemCount: controller.itemList.length,
