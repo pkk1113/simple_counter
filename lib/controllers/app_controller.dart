@@ -6,6 +6,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:simple_counter/controllers/counter_controller.dart';
 import 'package:simple_counter/models/counter_data.dart';
 
+enum CountSortType { INC, DEC }
+
+enum TitleSortType { INC, DEC }
+
 class Item {
   final Key key;
   CounterController counterController;
@@ -19,9 +23,6 @@ class Item {
           tag: CounterController.createTag(key),
         );
 }
-
-enum CountSortType { INC, DEC }
-enum TitleSortType { INC, DEC }
 
 class AppController extends GetxController {
   static AppController get to => Get.find();
@@ -148,17 +149,22 @@ class AppController extends GetxController {
     _countSortType = CountSortType.values[(_countSortType.index + 1) % CountSortType.values.length];
   }
 
-  @override
-  void onClose() {
-    clear();
-    super.onClose();
-  }
-
   Future<void> swap(int oldIndex, int newIndex) async {
     if (oldIndex < newIndex) newIndex -= 1;
     if (oldIndex >= itemList.length || newIndex >= itemList.length) return;
 
     final item = itemList.removeAt(oldIndex);
     itemList.insert(newIndex, item);
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+  }
+
+  @override
+  void onClose() {
+    clear();
+    super.onClose();
   }
 }
