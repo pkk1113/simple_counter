@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.simple_counter">
+    package="com.teamgear92.simple_counter">
    <application
         android:label="SIMPLE COUNTER"
         android:icon="@mipmap/ic_launcher">
