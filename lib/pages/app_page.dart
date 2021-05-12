@@ -24,27 +24,27 @@ class AppPage extends GetView<AppController> {
                               children: [
                                 FloatingActionButton(
                                   child: Icon(Icons.save),
-                                  tooltip: '저장',
+                                  tooltip: 'Save',
                                   onPressed: controller.save,
                                 ),
                                 SizedBox(width: 5.0),
                                 FloatingActionButton(
                                   child: Icon(Icons.download_rounded),
-                                  tooltip: '불러오기',
+                                  tooltip: 'Load',
                                   onPressed: controller.load,
                                 ),
                               ],
                             ),
                             FloatingActionButton(
                               child: Icon(Icons.add),
-                              tooltip: '카운터 추가',
+                              tooltip: 'Add Counter',
                               onPressed: controller.addCounter,
                             ),
                           ],
                         ),
                       ),
                       appBar: AppBar(
-                        title: Text('카운터'),
+                        title: Text('SIMPLE COUNTER'),
                         centerTitle: true,
                       ),
                       body: GestureDetector(

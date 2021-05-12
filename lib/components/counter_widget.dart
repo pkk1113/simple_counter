@@ -6,10 +6,10 @@ import 'package:simple_counter/controllers/counter_controller.dart';
 class CounterWidget extends StatelessWidget {
   /// 상수
   static const double _buttonSize = 30.0;
-  static const _fontSize = 20.0;
+  static const _fontSize = 25.0;
   static const TextStyle _textStyle = TextStyle(
     fontSize: _fontSize,
-    height: 24.0 / _fontSize,
+    height: 30.0 / _fontSize,
   );
   static const _borderColor = Colors.black54;
   static const InputDecoration _textfieldInputDectoration = InputDecoration(
@@ -45,7 +45,7 @@ class CounterWidget extends StatelessWidget {
                     textAlign: TextAlign.left,
                     style: _textStyle,
                     keyboardType: TextInputType.text,
-                    decoration: _textfieldInputDectoration.copyWith(hintText: '제목'),
+                    decoration: _textfieldInputDectoration.copyWith(hintText: 'Title'),
                     textInputAction: TextInputAction.next,
                     focusNode: controller.focusNode,
                     onEditingComplete: controller.toNextFocus,
