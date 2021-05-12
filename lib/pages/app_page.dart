@@ -45,10 +45,11 @@ class AppPage extends GetView<AppController> {
                   centerTitle: true,
                 ),
                 body: GestureDetector(
-                  onTap: Get.focusScope.unfocus,
+                  onTap: () => Get.focusScope.unfocus(),
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-                    child: Obx(() => ListView.builder(
+                    child: Obx(() => ReorderableListView.builder(
+                          onReorder: (oldIndex, newIndex) => controller.swap(oldIndex, newIndex),
                           itemCount: controller.itemList.length,
                           itemBuilder: (_, index) => Dismissible(
                               key: controller.itemList[index].key,

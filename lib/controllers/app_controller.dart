@@ -101,4 +101,12 @@ class AppController extends GetxController {
     clear();
     super.onClose();
   }
+
+  Future<void> swap(int oldIndex, int newIndex) async {
+    if (oldIndex < newIndex) newIndex -= 1;
+    if (oldIndex >= itemList.length || newIndex >= itemList.length) return;
+
+    final item = itemList.removeAt(oldIndex);
+    itemList.insert(newIndex, item);
+  }
 }
