@@ -37,12 +37,6 @@ class AppPage extends GetView<AppController> {
                                 ),
                               ],
                             ),
-                            FloatingActionButton(
-                              backgroundColor: Colors.black54,
-                              child: Icon(Icons.settings),
-                              tooltip: 'Settings',
-                              onPressed: () => Get.toNamed('/settings'),
-                            ),
                             Row(
                               children: [
                                 FloatingActionButton(

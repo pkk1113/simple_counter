@@ -11,6 +11,7 @@ void main() {
       scaffoldBackgroundColor: Colors.white,
     ),
     initialRoute: '/',
+    debugShowCheckedModeBanner: false,
     getPages: [
       GetPage(
           name: '/',
