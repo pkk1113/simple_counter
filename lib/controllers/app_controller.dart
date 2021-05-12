@@ -20,12 +20,17 @@ class Item {
         );
 }
 
+enum CountSortType { INC, DEC }
+enum TitleSortType { INC, DEC }
+
 class AppController extends GetxController {
   static AppController get to => Get.find();
 
   int _itemIndex = 0;
   RxBool inProgress = false.obs;
   RxList<Item> itemList = RxList<Item>();
+  CountSortType _countSortType = CountSortType.INC;
+  TitleSortType _titleSortType = TitleSortType.INC;
 
   bool get anyFocus => itemList.any((element) => element.counterController.focusNode.hasFocus);
 
@@ -106,6 +111,34 @@ class AppController extends GetxController {
           ? Get.snackbar('저장 성공', '저장하였습니다.')
           : Get.snackbar('저장 실패', '저장 중 문제가 발생하였습니다.');
     }
+  }
+
+  void sortTitle() async {
+    switch (_titleSortType) {
+      case TitleSortType.INC:
+        itemList.sort((a, b) => a.counterController.titleTextEditingController.text
+            .compareTo(b.counterController.titleTextEditingController.text));
+        break;
+      case TitleSortType.DEC:
+        itemList.sort((a, b) => b.counterController.titleTextEditingController.text
+            .compareTo(a.counterController.titleTextEditingController.text));
+        break;
+    }
+    _titleSortType = TitleSortType.values[(_countSortType.index + 1) % TitleSortType.values.length];
+  }
+
+  void sortCount() async {
+    switch (_countSortType) {
+      case CountSortType.INC:
+        itemList.sort(
+            (a, b) => a.counterController.count.value.compareTo(b.counterController.count.value));
+        break;
+      case CountSortType.DEC:
+        itemList.sort(
+            (a, b) => b.counterController.count.value.compareTo(a.counterController.count.value));
+        break;
+    }
+    _countSortType = CountSortType.values[(_countSortType.index + 1) % CountSortType.values.length];
   }
 
   @override

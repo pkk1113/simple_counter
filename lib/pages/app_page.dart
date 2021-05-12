@@ -23,12 +23,14 @@ class AppPage extends GetView<AppController> {
                             Row(
                               children: [
                                 FloatingActionButton(
+                                  backgroundColor: Colors.black54,
                                   child: Icon(Icons.save),
                                   tooltip: 'Save',
                                   onPressed: controller.save,
                                 ),
                                 SizedBox(width: 5.0),
                                 FloatingActionButton(
+                                  backgroundColor: Colors.black54,
                                   child: Icon(Icons.download_rounded),
                                   tooltip: 'Load',
                                   onPressed: controller.load,
@@ -36,6 +38,7 @@ class AppPage extends GetView<AppController> {
                               ],
                             ),
                             FloatingActionButton(
+                              backgroundColor: Colors.black54,
                               child: Icon(Icons.add),
                               tooltip: 'Add Counter',
                               onPressed: controller.addCounter,
@@ -46,6 +49,24 @@ class AppPage extends GetView<AppController> {
                       appBar: AppBar(
                         title: Text('SIMPLE COUNTER'),
                         centerTitle: true,
+                        leading: InkWell(
+                          customBorder: CircleBorder(),
+                          onTap: controller.sortTitle,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Center(child: Icon(Icons.sort_by_alpha_rounded)),
+                          ),
+                        ),
+                        actions: [
+                          InkWell(
+                            customBorder: CircleBorder(),
+                            onTap: controller.sortCount,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Center(child: Icon(Icons.sort_rounded)),
+                            ),
+                          )
+                        ],
                       ),
                       body: GestureDetector(
                         onTap: () => Get.focusScope.unfocus(),

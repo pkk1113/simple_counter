@@ -7,7 +7,7 @@ import 'package:simple_counter/pages/app_page.dart';
 void main() {
   runApp(GetMaterialApp(
     theme: ThemeData(
-      primaryColor: Colors.white,
+      primaryColor: Colors.grey[900],
       scaffoldBackgroundColor: Colors.white,
     ),
     initialRoute: '/',
