@@ -6,29 +6,34 @@ import 'package:simple_counter/controllers/counter_controller.dart';
 class CounterWidget extends StatelessWidget {
   /// 상수
   static const double _buttonSize = 30.0;
+  static const _fontSize = 20.0;
   static const TextStyle _textStyle = TextStyle(
-    fontSize: 25.0,
-    height: 30.0 / 25.0,
+    fontSize: _fontSize,
+    height: 24.0 / _fontSize,
   );
+  static const _borderColor = Colors.black54;
   static const InputDecoration _textfieldInputDectoration = InputDecoration(
-    enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.black54)),
-    disabledBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.black54)),
-    focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: Colors.black54)),
-    contentPadding: EdgeInsets.symmetric(horizontal: 5.0),
+    enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: _borderColor)),
+    disabledBorder: OutlineInputBorder(borderSide: BorderSide(color: _borderColor)),
+    focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: _borderColor)),
+    contentPadding: EdgeInsets.symmetric(horizontal: 5.0, vertical: 2.0),
+    isDense: true,
   );
 
   /// 필드
   final CounterController controller;
+  final int index;
 
   /// 생성자
   CounterWidget({
     @required this.controller,
+    @required this.index,
   });
 
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Colors.blueAccent,
+      color: Colors.transparent,
       borderRadius: BorderRadius.circular(5.0),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 5.0, vertical: 5.0),
@@ -41,6 +46,9 @@ class CounterWidget extends StatelessWidget {
                     style: _textStyle,
                     keyboardType: TextInputType.text,
                     decoration: _textfieldInputDectoration.copyWith(hintText: '제목'),
+                    textInputAction: TextInputAction.next,
+                    focusNode: controller.focusNode,
+                    onEditingComplete: controller.toNextFocus,
                     inputFormatters: [_TitleInputFormatter()])),
             SizedBox(width: 10.0),
             Padding(
@@ -49,6 +57,7 @@ class CounterWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   InkWell(
+                    canRequestFocus: false,
                     child: Icon(Icons.remove, size: _buttonSize),
                     customBorder: CircleBorder(),
                     onTap: controller.minus,
@@ -63,13 +72,26 @@ class CounterWidget extends StatelessWidget {
                         )),
                   ),
                   InkWell(
+                    canRequestFocus: false,
                     child: Icon(Icons.add, size: _buttonSize),
                     customBorder: CircleBorder(),
                     onTap: controller.plus,
                   ),
                 ],
               ),
-            )
+            ),
+            SizedBox(width: 10.0),
+            ReorderableDragStartListener(
+              index: index,
+              child: Container(
+                padding: EdgeInsets.all(2.0),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5.0),
+                  border: Border.all(width: 1, color: _borderColor),
+                ),
+                child: Icon(Icons.menu, color: _borderColor),
+              ),
+            ),
           ],
         ),
       ),

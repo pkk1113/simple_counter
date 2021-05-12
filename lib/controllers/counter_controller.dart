@@ -5,6 +5,7 @@ class CounterController extends GetxController {
   static String createTag(Key key) => '${key.toString()}';
 
   TextEditingController titleTextEditingController;
+  FocusNode focusNode;
   RxInt count;
 
   void plus() {
@@ -19,11 +20,17 @@ class CounterController extends GetxController {
     String title = '',
     int count = 0,
   })  : titleTextEditingController = TextEditingController(text: title),
+        focusNode = FocusNode(),
         count = RxInt(count);
 
   @override
   void onClose() {
     titleTextEditingController.dispose();
     super.onClose();
+  }
+
+  void toNextFocus() {
+    print('!!');
+    Get.focusScope.nextFocus();
   }
 }

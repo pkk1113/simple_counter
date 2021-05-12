@@ -21,12 +21,16 @@ class Item {
 }
 
 class AppController extends GetxController {
-  int itemIndex = 0;
+  static AppController get to => Get.find();
+
+  int _itemIndex = 0;
   RxBool inProgress = false.obs;
   RxList<Item> itemList = RxList<Item>();
 
+  bool get anyFocus => itemList.any((element) => element.counterController.focusNode.hasFocus);
+
   void addCounter() {
-    itemList.add(Item(key: Key('${itemIndex++}')));
+    itemList.add(Item(key: Key('${_itemIndex++}')));
   }
 
   void removeAt(int index) {
@@ -53,7 +57,7 @@ class AppController extends GetxController {
 
           counterData.counterList.forEach((element) {
             itemList.add(Item(
-              key: Key('${itemIndex++}'),
+              key: Key('${_itemIndex++}'),
               title: element.title,
               count: element.count,
             ));
@@ -67,6 +71,8 @@ class AppController extends GetxController {
 
   void save() async {
     inProgress.value = true;
+    bool progressResult = false;
+    final now = DateTime.now();
 
     try {
       final List<Counter> counterList = [];
@@ -87,12 +93,18 @@ class AppController extends GetxController {
       final result = await sharedPreferences.setString('counter_data', jsonEncodedCounterData);
 
       if (!result) throw null;
-
-      Get.snackbar('저장 성공', '저장하였습니다.');
+      progressResult = true;
     } catch (_) {
-      Get.snackbar('저장 실패', '저장 중 문제가 발생하였습니다.');
+      progressResult = false;
     } finally {
+      int progressedMillisecond = DateTime.now().difference(now).inMilliseconds;
+      if (progressedMillisecond < 500) {
+        await Future.delayed(Duration(milliseconds: 2000 - progressedMillisecond));
+      }
       inProgress.value = false;
+      progressResult
+          ? Get.snackbar('저장 성공', '저장하였습니다.')
+          : Get.snackbar('저장 실패', '저장 중 문제가 발생하였습니다.');
     }
   }
 
